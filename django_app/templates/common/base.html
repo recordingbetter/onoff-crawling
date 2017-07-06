@@ -1,8 +1,4 @@
 {% load static %}
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/master
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -25,6 +21,7 @@
             <li><a href="#">회원가입</a></li>
         </ul>
     </div>
+{% if user.is_authenticated %}
     <div class="logoNsearch">
         <div class="logo">
             <a href="#">DangJangManNa</a>
@@ -36,6 +33,7 @@
             </form>
         </div>
     </div>
+{% endif %}
     {% block content %}
 
     {% endblock %}
