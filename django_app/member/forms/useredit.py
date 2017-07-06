@@ -6,5 +6,10 @@ class UserEditForm(forms.ModelForm):
     class Meta:
         model = MyUser
         fields = [
-            ''
+            'username',
+            'password',
+            'img_profile',
+            'nickname',
+            'slack',
+            'phone',
         ]
