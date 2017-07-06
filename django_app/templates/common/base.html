@@ -33,8 +33,9 @@
             <a href="#">DangJangManNa</a>
         </div>
         <div class="search">
-            <form action="#">
-                <input type="text" />
+            <form action="{% url 'news:news_search'%}" method="POST" name="q">
+                {% csrf_token %}
+                {{ search_form }}
                 <button type="submit" class="btn-mint">검색</button>
             </form>
         </div>

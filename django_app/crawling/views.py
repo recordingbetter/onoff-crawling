@@ -1,4 +1,7 @@
+from django.db.models import Q
 from django.shortcuts import render
+
+from .forms import SearchForm
 from .models import News
 
 
@@ -16,12 +19,8 @@ def selenium(keyword):
     return elements
 
 
-def news_list(request, user_id):
-    # News 모델 객체
-    datas = News.objects.filter(pk=user_id)
-
-    # 크롤링한 객체
-    new_datas = selenium("빅데이터")[:10]
+def news_get_or_create(user, q):
+    new_datas = selenium(q)[:10]
 
     for i in new_datas:
         thumbnail = i.find_element_by_class_name("thumbnail").get_attribute('src')
@@ -31,16 +30,37 @@ def news_list(request, user_id):
         print(thumbnail, title, detail_link)
 
         News.objects.get_or_create(
-            user=request.user,
+            user=user,
             title=title,
             detail_link=detail_link,
             img_news=thumbnail,
         )
-        print(News.objects.last().title)
 
-    datas = News.objects.filter(pk=user_id)
+
+def news_list(request):
+
+    datas = News.objects.filter(pk=request.user.id)
 
     context = {
         'datas': datas,
+        'search_form': SearchForm()
     }
     return render(request, 'news/news_list.html', context)
+
+
+def news_search(request):
+    form = SearchForm(data=request.POST)
+    if form.is_valid():
+
+        q = form.cleaned_data['q_search']
+
+        news_get_or_create(request.user, q)
+
+        datas = News.objects.filter(title__contains=q)
+
+        context = {
+            'datas': datas,
+            'search_form': SearchForm(),
+        }
+        return render(request, 'news/news_search.html', context)
+
