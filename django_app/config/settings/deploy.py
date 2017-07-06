@@ -35,5 +35,7 @@ ALLOWED_HOSTS = config_secret_deploy['django']['allowed_hosts']
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 DATABASES = config_secret_deploy['django']['database']
 
+SECRET_KEY = config_secret_common['django']['secret_key']
+
 # print('@@@@@@@ DEBUG:', DEBUG)
 # print('@@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)

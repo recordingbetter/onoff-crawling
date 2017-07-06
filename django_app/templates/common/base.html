@@ -3,10 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>당장만나!</title>
+
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+
+    <link href='https://fonts.googleapis.com/css?family=Gochi Hand' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Walter Turncoat' rel='stylesheet'>
 </head>
 <body>
-{% block content %}
+<div class="container">
+    <div class="top-bar"></div>
+    <div class="logoNsearch">
+        <div class="logo">
+            <a href="#">
+                DangJangManNa
+            </a>
+        </div>
+        <div class="search"></div>
+    </div>
+    {% block content %}
 
-{% endblock %}
+    {% endblock %}
+</div>
 </body>
 </html>

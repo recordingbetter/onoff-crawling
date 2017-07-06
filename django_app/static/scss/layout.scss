@@ -1,0 +1,33 @@
+.container {
+  .top-bar {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    float: left;
+    background: #333333;
+    color: #fff;
+  }
+
+  .logNsearch {
+    .logo {
+      font-family: 'Gochi Hand', 'Walter Turncoat';
+      font-size: 28px;
+      font-weight: bold;
+      width:35%;
+      float: left;
+
+      a {
+        color: #60DB96;
+        padding-left: 50px;
+
+        &:hover {
+          color: pink;
+        }
+      }
+    }
+
+    .search {
+
+    }
+  }
+}
