@@ -1,5 +1,5 @@
 
-FROM        crawling_ubuntu
+FROM        recordingbetter/crawling_ubuntu
 MAINTAINER  recordingbetter@gmail.com
 
 # 현재 경로의 모든 파일들을 컨테이너의 /srv/deploy_eb/docker 폴더에 복사

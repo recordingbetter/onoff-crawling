@@ -33,10 +33,10 @@ RUN         echo 'eval "$(pyenv init -)"\n' >> ~/.zshrc
 RUN         echo 'eval "$(pyenv virtualenv-init -)"\n' >> ~/.zshrc
 
 # pyenv virtualenv
-RUN         pyenv virtualenv 3.5.3 onoff_crawling
+RUN         pyenv virtualenv 3.5.3 onoffmix
 
 # uwsgi install
-RUN         /root/.pyenv/versions/onoff_crawling/bin/pip install uwsgi
+RUN         /root/.pyenv/versions/onoffmix/bin/pip install uwsgi
 
 # Nginx install
 RUN         apt-get -y install nginx
