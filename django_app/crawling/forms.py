@@ -55,11 +55,13 @@ class SignupForm(forms.Form):
         username = self.cleaned_data['username']
         nickname = self.cleaned_data['nickname']
         password = self.cleaned_data['password1']
-        new_user = MyUser.objects.create(
+        new_user = MyUser.objects.create_user(
             username=username,
             nickname=nickname,
             password=password,
         )
+        return new_user
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(
