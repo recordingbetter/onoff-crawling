@@ -1,5 +1,9 @@
+from django.contrib.auth import authenticate
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.urls import reverse
 
+from member.forms import SignupForm
 from member.models import MyUser
 from ..forms import UserEditForm
 
@@ -22,24 +26,41 @@ def my_profile(request, user_pk=None):
     return render(request, 'member/my_profile.html', context)
 
 
+def django_login(request, user):
+    pass
+
+
 def profile_edit(request):
     if request.method == "POST":
         form = UserEditForm(
             request.POST,
-            request.FILE,
+            request.FILES,
             instance=request.user
         )
         if form.is_valid():
             form.save()
+            username = request.POST['username']
+            user = MyUser.objects.get(username=username)
+            new_password = request.POST['password']
+            user.set_password(new_password)
+            user = authenticate(username=username, password=new_password)
+            if user is not None:
+                django_login(request, user)
+            else:
+                return HttpResponseRedirect(reverse('member:login'))
+            user.save()
             return redirect('member:my_profile')
     else:
         form = UserEditForm(
             instance=request.user
         )
+    form = UserEditForm(
+        instance=request.user
+    )
     context = {
         'form': form,
     }
-    return render(request, 'member/profile_edit.html', context)
+    return render(request, 'member/profile_edit.html', context=context)
 
 
 def profile_delete(request):
