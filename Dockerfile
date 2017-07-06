@@ -17,13 +17,12 @@ RUN         /root/.pyenv/versions/onoffmix/bin/pip install -r .requirements/depl
 COPY        .config/supervisor/uwsgi.conf /etc/supervisor/conf.d/
 COPY        .config/supervisor/nginx.conf /etc/supervisor/conf.d/
 
-
 # nginx 설정파일, nginx 사이트 파일 복사
-COPY        .config/nginx/nginx.conf /etc/nginx/
-COPY        .config/nginx/nginx-app.conf /etc/nginx/sites-available/
+COPY        .config/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY        .config/nginx/nginx-app.conf /etc/nginx/sites-available/nginx-app.conf
 
 # nginx 링크 작성
-RUN         ln -sf /etc/nginx/sites-available/nginx-app.conf /etc/nginx/sites-enabled/nginx.conf
+RUN         ln -sf /etc/nginx/sites-available/nginx-app.conf /etc/nginx/sites-enabled/nginx-app.conf
 RUN         rm -rf /etc/nginx/sites-enabled/default
 
 # collectstatic
