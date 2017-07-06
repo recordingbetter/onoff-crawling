@@ -7,7 +7,6 @@ class UserEditForm(forms.ModelForm):
         model = MyUser
         fields = [
             'username',
-            'password',
             'img_profile',
             'nickname',
             'slack',
