@@ -29,7 +29,7 @@ MEDIA_URL = '/media/'
 # 프로젝트 내부에 저장하지 않고 AWS s3에 저장할거라 필요없음
 # MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = config_secret_deploy['django']['allowed_hosts']
 
 # Database
