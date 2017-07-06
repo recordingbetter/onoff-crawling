@@ -29,12 +29,17 @@ def news_get_or_create(user, q):
 
         print(thumbnail, title, detail_link)
 
-        News.objects.get_or_create(
+        news, news_create = News.objects.get_or_create(
             user=user,
             title=title,
             detail_link=detail_link,
             img_news=thumbnail,
         )
+
+        # 새로운레코드가 생겼으면
+        if news_create:
+            # slack, sms 보내기
+            pass
 
 
 def news_list(request):
