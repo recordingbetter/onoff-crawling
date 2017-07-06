@@ -1,5 +1,5 @@
 """
-WSGI config for config project.
+WSGI config for deploy_ec2 project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.debug")
+# 환경변수 설정 (os.environ)
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.deploy")
 
 application = get_wsgi_application()

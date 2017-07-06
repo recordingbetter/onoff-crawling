@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import News
 
-# Register your models here.
+class PostAdmin(admin.ModelAdmin):
+    # list_display = ['id', 'author', 'created_at', 'updated_at']
+    pass
+admin.site.register(News, PostAdmin)
