@@ -1,4 +1,4 @@
-from django.contrib.auth import login as django_login
+from django.contrib.auth import login as django_login, logout as django_logout
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -24,10 +24,23 @@ def signup(request):
     return render(request, 'member/signup.html', context)
 
 
-def login(request, user_pk):
+def login(request):
     if request.method == "POST":
         form = LoginForm(data=request.POST)
         if form.is_valid():
             user = form.cleaned_data['user']
             django_login(request, user)
-            return redirect('')
+            return redirect('news:news_list')
+    else:
+        if request.user.is_authenticated():
+            return redirect('news:news_list')
+        form = LoginForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'member/login.html', context)
+
+
+def logout(request):
+    django_logout(request)
+    return redirect('member:login')
