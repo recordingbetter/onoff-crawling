@@ -63,4 +63,3 @@ def news_search(request):
             'search_form': SearchForm(),
         }
         return render(request, 'news/news_search.html', context)
-
