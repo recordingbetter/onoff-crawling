@@ -6,7 +6,7 @@
       {% if request.user.is_authenticated %}
       <p>{{ user }}가 로그인 중입니다. <a href="{% url 'member:logout' %}" class="btn">로그아웃</a></p>
       {% else %}
-        <form action="{% url 'member:my_profile' %}" method="post">
+        <form action="" method="post">
           {% csrf_token %}
           {% include 'include/field_set.html' with form=form %}
           <button type="submit" class="btn">로그인</button>
