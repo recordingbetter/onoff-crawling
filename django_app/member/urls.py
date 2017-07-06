@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^delete/$', views.profile_delete, name='user_delete'),
     url(r'^profile_edit/$', views.profile_edit, name='profile_edit'),
+    url(r'^sms_send/$', views.sms_send, name='sms_send'),
 ]

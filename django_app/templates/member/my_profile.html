@@ -19,6 +19,11 @@
         {% csrf_token %}
         <button type="submit">탈퇴하기</button>
     </form>
+
+    <form action="{% url 'member:sms_send' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">문자보내기</button>
+    </form>
 </div>
 
 {# 키워드 리스트 시작 #}

@@ -3,7 +3,7 @@
 *.swp
 *.json
 .media/
-
+django_app/member/apis.py
 .config/secret/
 
 
