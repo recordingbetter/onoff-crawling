@@ -1,5 +1,21 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-    {{ login_form }}
+<nav>
+    <div class="login-btn">
+      {% if request.user.is_authenticated %}
+      <p>{{ user }}가 로그인 중입니다. <a href="{% url 'member:logout' %}" class="btn">로그아웃</a></p>
+      {% else %}
+        <form action="{% url 'member:login' %}" method="post">
+          {% csrf_token %}
+          {% include 'include/field_set.html' with form=form %}
+          <button type="submit" class="btn">로그인</button>
+        </form>
+        <form action="{% url 'member:signup' %}" method="GET">
+          {% csrf_token %}
+          <button class="btn">회원가입</button>
+        </form>
+      {% endif %}
+    </div>
+</nav>
 {% endblock %}
