@@ -1,7 +1,7 @@
 import re
 
 from django import forms
-from crawling.models import MyUser
+from ..models import MyUser
 from django.contrib.auth import authenticate
 
 
