@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate
 
 
 class SignupForm(forms.Form):
+    img_profile = forms.ImageField()
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -44,7 +45,7 @@ class SignupForm(forms.Form):
     phone = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'placeholder': '문자알림을 받을 휴대폰 번호를 숫자만 입력하세요 (필수입력)',
+                'placeholder': '000-0000-0000 (필수입력)',
             }
         )
     )
@@ -80,7 +81,7 @@ class SignupForm(forms.Form):
 
         phone_number = phone_strip.match(phone)
         if phone_number is None:
-            raise forms.ValidationError('휴대전화번호가 올바르지 않습니다. 숫자로만 입력해주세요')
+            raise forms.ValidationError('휴대전화번호가 올바르지 않습니다. 양식대로 입력하세요.')
         print('phone_number: ', phone_number)
         phone_val = phone_number.groups()
         print('phone_val: ', phone_val)
@@ -92,12 +93,14 @@ class SignupForm(forms.Form):
         return num_valid
 
     def create_user(self):
+        img_profile = self.cleaned_data['img_profile']
         username = self.cleaned_data['username']
         nickname = self.cleaned_data['nickname']
         password = self.cleaned_data['password1']
         slack = self.cleaned_data['slack']
         phone = self.cleaned_data['phone']
         new_user = MyUser.objects.create_user(
+            img_profile=img_profile,
             username=username,
             nickname=nickname,
             password=password,

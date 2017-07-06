@@ -1,16 +1,19 @@
 from django.contrib.auth import login as django_login, logout as django_logout
 from django.shortcuts import render, redirect
+from member.forms import SignupForm, LoginForm
 
 # Create your views here.
-from django.urls import reverse
 
-from member.forms import SignupForm, LoginForm
-from member.models import MyUser
+__all__ = (
+    'signup',
+    'login',
+    'logout',
+)
 
 
 def signup(request):
     if request.method == "POST":
-        form = SignupForm(data=request.POST)
+        form = SignupForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             user = form.create_user()
             django_login(request, user)
@@ -28,8 +31,8 @@ def signup(request):
 
 
 def login(request):
+    form = LoginForm(data=request.POST)
     if request.method == "POST":
-        form = LoginForm(data=request.POST)
         if form.is_valid():
             user = form.cleaned_data['user']
             django_login(request, user)
@@ -37,7 +40,7 @@ def login(request):
     else:
         if request.user.is_authenticated():
             return redirect('member:my_profile')
-    form = LoginForm()
+        form = LoginForm()
     context = {
         'form': form,
     }
@@ -47,13 +50,3 @@ def login(request):
 def logout(request):
     django_logout(request)
     return redirect('member:login')
-
-
-def my_profile(request, user_pk=None):
-    if not request.user.is_authenticated:
-        return redirect('member:login')
-    user = MyUser.objects.filter(username=request.user.username)
-    context = {
-        'user': user,
-    }
-    return render(request, 'member/my_profile.html', context)
