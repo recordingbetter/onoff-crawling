@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from crawling import views
+from . import views
 
 app_name = 'news'
 urlpatterns = [
-    url(r'^$', views.news_list, name='news_list')
+    url(r'^(?P<user_id>\d+)$', views.news_list, name='news_list')
 ]
