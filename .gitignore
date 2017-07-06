@@ -2,14 +2,9 @@
 .idea/
 *.swp
 *.json
-.config_secret/
-.settings
-.wsgi
-.static_root/
-static_root/
-.media/
-.config
-.dockerfiles
+
+.config/secret/
+
 
 # Created by https://www.gitignore.io/api/macos,django,python,pycharm
 

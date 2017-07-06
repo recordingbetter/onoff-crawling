@@ -3,7 +3,6 @@ from .models import News
 
 
 def selenium(keyword):
-
     from selenium import webdriver
 
     ff_driver = webdriver.Chrome()
@@ -30,5 +29,4 @@ def news_list(request, user_id):
     context = {
         'datas': datas,
     }
-
     return render(request, 'news/news_list.html', context)

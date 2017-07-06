@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from crawling.models import MyUser
 from django.contrib.auth import authenticate
@@ -32,6 +34,20 @@ class SignupForm(forms.Form):
             }
         )
     )
+    slack = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                'placeholder': 'example@example.com (필수입력)',
+            }
+        )
+    )
+    phone = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '문자알림을 받을 휴대폰 번호를 숫자만 입력하세요 (필수입력)',
+            }
+        )
+    )
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -51,13 +67,33 @@ class SignupForm(forms.Form):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("비밀번호가 서로 일치하지 않습니다. 다시 입력해주세요.")
 
+    def clean_slack(self):
+        slack = self.cleaned_data.get('slack')
+        if slack and slack in MyUser.objects.get(slack=slack).exists():
+            raise forms.ValidationError('이미 등록된 슬랙 계정입니다.')
+        return slack
+
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        phone_strip = re.compile(r'^[0-9]{2,3}[-.][0-9]{3,4}[-.][0-9]{4}$')
+        phone_number = phone_strip.search(phone)
+        phone_val = phone_number.group()
+        if phone_val and phone_val in MyUser.objects.get(phone=phone_val).exists():
+            raise forms.ValidationError('이미 등록된 전화번호입니다.')
+        return phone_val
+
     def create_user(self):
         username = self.cleaned_data['username']
         nickname = self.cleaned_data['nickname']
         password = self.cleaned_data['password1']
+        slack = self.cleaned_data['slack']
+        phone = self.cleaned_data['phone']
         new_user = MyUser.objects.create_user(
             username=username,
             nickname=nickname,
             password=password,
+            slack=slack,
+            phone=phone,
         )
         return new_user
+
