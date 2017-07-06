@@ -30,11 +30,11 @@ def login(request):
         if form.is_valid():
             user = form.cleaned_data['user']
             django_login(request, user)
-            return redirect('news:news_list')
+            return redirect('member:my_profile')
     else:
         if request.user.is_authenticated():
-            return redirect('news:news_list')
-        form = LoginForm()
+            return redirect('member:my_profile')
+    form = LoginForm()
     context = {
         'form': form,
     }
