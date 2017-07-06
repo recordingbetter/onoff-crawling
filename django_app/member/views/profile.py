@@ -10,12 +10,14 @@ __all__ = (
 )
 
 
-def my_profile(request):
+def my_profile(request, user_pk=None):
     if not request.user.is_authenticated:
         return redirect('member:login')
     user = request.user
+    user_pk = request.user.id
     context = {
         'user': user,
+        'user_pk': user_pk,
     }
     return render(request, 'member/my_profile.html', context)
 
