@@ -30,5 +30,7 @@ DATABASES = {
         }
     }
 
+SECRET_KEY = config_secret_common['django']['secret_key']
+
 print('@@@@@@@ DEBUG:', DEBUG)
 print('@@@@@@@ ALLOWED_HOSTS:', ALLOWED_HOSTS)
