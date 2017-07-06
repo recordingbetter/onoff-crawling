@@ -16,15 +16,15 @@ def news_list(request, user_id):
     datas = News.objects.filter(pk=user_id)
 
     # 크롤링한 객체
-    new_datas = News.objects.filter(pk=user_id)
+    # new_datas = News.objects.filter(pk=user_id)
 
-    if datas.detail_link != new_datas.detail_link:
-        datas = News.objects.create(
-            user=request.user,
-            title=new_datas.title,
-            data_link=new_datas.data_link,
-            img_news=new_datas.img_news,
-        )
+    # if datas.detail_link != new_datas.detail_link:
+    #     datas = News.objects.create(
+    #         user=request.user,
+    #         title=new_datas.title,
+    #         data_link=new_datas.data_link,
+    #         img_news=new_datas.img_news,
+    #     )
 
     context = {
         'datas': datas,
