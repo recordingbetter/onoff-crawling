@@ -35,3 +35,5 @@ def news_list(request, user_id):
         'datas': datas,
     }
     return render(request, 'news/news_list.html', context)
+
+
