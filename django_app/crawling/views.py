@@ -1,3 +1,8 @@
+import re
+
+import requests
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 from django.db.models import Q
 from django.shortcuts import render
 
@@ -29,12 +34,29 @@ def news_get_or_create(user, q):
 
         print(thumbnail, title, detail_link)
 
-        News.objects.get_or_create(
+        news, news_create = News.objects.get_or_create(
             user=user,
             title=title,
             detail_link=detail_link,
-            img_news=thumbnail,
+            # img_news=thumbnail,
         )
+
+        # 새로운레코드가 생겼으면
+        if news_create:
+            # 이미지 저장
+            # p = re.compile(r'.*\.([^?]+)')
+            # file_ext = re.search(p, thumbnail).group(1)
+            file_name = '{}.{}'.format(
+                    news.id,
+                    'jpg'
+                    )
+            temp_file = NamedTemporaryFile()
+            response = requests.get(thumbnail)
+            temp_file.write(response.content)
+            news.img_news.save(file_name, File(temp_file))
+
+            # slack, sms 보내기
+            pass
 
 
 def news_list(request):
@@ -49,17 +71,24 @@ def news_list(request):
 
 
 def news_search(request):
-    form = SearchForm(data=request.POST)
-    if form.is_valid():
+    if request.method == "POST":
+        form = SearchForm(data=request.POST)
+        if form.is_valid():
 
-        q = form.cleaned_data['q_search']
+            q = form.cleaned_data['q_search']
 
-        news_get_or_create(request.user, q)
+            news_get_or_create(request.user, q)
 
+            datas = News.objects.filter(title__contains=q)
+
+            context = {
+                'datas': datas,
+                'search_form': SearchForm(),
+            }
+            return render(request, 'news/news_search.html', context)
+    else:
         datas = News.objects.filter(title__contains=q)
-
         context = {
             'datas': datas,
-            'search_form': SearchForm(),
-        }
+            }
         return render(request, 'news/news_search.html', context)
