@@ -16,10 +16,16 @@
 <body>
 <div class="container">
     <div class="top-bar">
-        <ul>
-            <li><a href="#">로그인</a></li> |
-            <li><a href="#">회원가입</a></li>
-        </ul>
+      {% if request.user.is_authenticated %}
+      <p>{{ user }}가 로그인 중입니다. <a href="{% url 'member:logout' %}" class="btn">로그아웃</a></p>
+      {% else %}
+{#        <form action="" method="post">#}
+{#          {% csrf_token %}#}
+{#          {% include 'include/field_set.html' with form=form %}#}
+            <a href="{% url 'member:login' %}"><button type="submit" class="btn">로그인</button></a>
+{#        </form>#}
+        <a href="{% url 'member:signup' %}"><button type="submit">회원가입</button></a>
+      {% endif %}
     </div>
 {% if user.is_authenticated %}
     <div class="logoNsearch">
