@@ -51,7 +51,7 @@ class SignupForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if username and username in MyUser.objects.filter(username=username).exists():
+        if username in MyUser.objects.filter(username=username).exists():
             raise forms.ValidationError("해당 아이디는 사용할 수 없습니다. 다른 아이디를 입력하세요.")
         return username
 
@@ -73,14 +73,18 @@ class SignupForm(forms.Form):
             raise forms.ValidationError('이미 등록된 슬랙 계정입니다.')
         return slack
 
-    def clean_phone(self):
-        phone = self.cleaned_data.get('phone')
-        phone_strip = re.compile(r'^[0-9]{2,3}[-.][0-9]{3,4}[-.][0-9]{4}$')
-        phone_number = phone_strip.search(phone)
-        phone_val = phone_number.group()
-        if phone_val and phone_val in MyUser.objects.get(phone=phone_val).exists():
-            raise forms.ValidationError('이미 등록된 전화번호입니다.')
-        return phone_val
+    # def clean_phone(self):
+    #     phone = self.cleaned_data.get('phone')
+    #     print(phone)
+    #     phone_strip = re.compile(r'^[0-9]{2,3}[-.][0-9]{3,4}[-.][0-9]{4}$')
+    #     print(phone_strip)
+    #     phone_number = phone_strip.search(phone)
+    #     print(phone_number)
+    #     phone_val = phone_number.group()
+    #     print(phone_val)
+    #     if phone_val and phone_val in MyUser.objects.get(phone=phone_val).exists():
+    #         raise forms.ValidationError('이미 등록된 전화번호입니다.')
+    #     return phone_val
 
     def create_user(self):
         username = self.cleaned_data['username']

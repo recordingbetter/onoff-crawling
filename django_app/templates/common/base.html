@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>당장만나!</title>
+
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    <link href='https://fonts.googleapis.com/css?family=Gochi Hand' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Walter Turncoat' rel='stylesheet'>
+</head>
+<body>
+<div class="container">
+    <div class="top-bar">
+        <ul>
+            <li><a href="#">로그인</a></li> |
+            <li><a href="#">회원가입</a></li>
+        </ul>
+    </div>
+{% if user.is_authenticated %}
+    <div class="logoNsearch">
+        <div class="logo">
+            <a href="#">DangJangManNa</a>
+        </div>
+        <div class="search">
+            <form action="#">
+                <input type="text" />
+                <button type="submit" class="btn-mint">검색</button>
+            </form>
+        </div>
+    </div>
+{% endif %}
+    {% block content %}
+
+    {% endblock %}
+</div>
+</body>
+</html>
