@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'member',
     'crawling',
-    'django_extensions',
+
     ]
 
 MIDDLEWARE = [
