@@ -34,41 +34,33 @@ def news_get_or_create(user, q):
 
         print(thumbnail, title, detail_link)
 
-<<<<<<< Updated upstream
-        news, news_create = News.objects.get_or_create(
-=======
         alram, alram_value = News.objects.get_or_create(
->>>>>>> Stashed changes
+
             user=user,
             title=title,
             detail_link=detail_link,
             # img_news=thumbnail,
         )
-
-<<<<<<< Updated upstream
-        # 새로운레코드가 생겼으면
-        if news_create:
-            # 이미지 저장
-            # p = re.compile(r'.*\.([^?]+)')
-            # file_ext = re.search(p, thumbnail).group(1)
-            file_name = '{}.{}'.format(
-                    news.id,
-                    'jpg'
-                    )
-            temp_file = NamedTemporaryFile()
-            response = requests.get(thumbnail)
-            temp_file.write(response.content)
-            news.img_news.save(file_name, File(temp_file))
-
-            # slack, sms 보내기
-            pass
-=======
         alram = q + "에 대한 정보가 업데이트됐습니다."
         if alram_value == True:
             slack_chat(alram)
 
->>>>>>> Stashed changes
-
+        # # 새로운레코드가 생겼으면
+        # if news_create:
+        #     # 이미지 저장
+        #     # p = re.compile(r'.*\.([^?]+)')
+        #     # file_ext = re.search(p, thumbnail).group(1)
+        #     file_name = '{}.{}'.format(
+        #             news.id,
+        #             'jpg'
+        #             )
+        #     temp_file = NamedTemporaryFile()
+        #     response = requests.get(thumbnail)
+        #     temp_file.write(response.content)
+        #     news.img_news.save(file_name, File(temp_file))
+        #
+        #     # slack, sms 보내기
+        #     pass
 
 def news_list(request):
 
@@ -91,11 +83,8 @@ def slack_chat(alram):
 
 
 def news_search(request):
-<<<<<<< Updated upstream
     if request.method == "POST":
-=======
-    if request.method == 'POST':
->>>>>>> Stashed changes
+
         form = SearchForm(data=request.POST)
         if form.is_valid():
 
@@ -110,12 +99,11 @@ def news_search(request):
                 'search_form': SearchForm(),
             }
             return render(request, 'news/news_search.html', context)
-<<<<<<< Updated upstream
+
     else:
         datas = News.objects.filter(title__contains=q)
         context = {
             'datas': datas,
             }
         return render(request, 'news/news_search.html', context)
-=======
->>>>>>> Stashed changes
+

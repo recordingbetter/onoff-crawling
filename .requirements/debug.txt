@@ -45,3 +45,4 @@ urllib3==1.21.1
 wcwidth==0.1.7
 websocket-client==0.44.0
 coolsms-python-sdk==2.0.3
+slacker==0.9.50
