@@ -1,9 +1,12 @@
 from django.shortcuts import redirect, render
+
+from member.models import MyUser
 from ..forms import UserEditForm
 
 __all__ = (
     'my_profile',
     'profile_edit',
+    'profile_delete',
 )
 
 
@@ -35,3 +38,12 @@ def profile_edit(request):
         'form': form,
     }
     return render(request, 'member/profile_edit.html', context)
+
+
+def profile_delete(request):
+    if request.method == "POST":
+        user = MyUser.objects.get(pk=request.user.id)
+        user.delete()
+        return redirect('member:signup')
+    else:
+        pass

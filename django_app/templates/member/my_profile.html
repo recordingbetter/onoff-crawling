@@ -3,12 +3,17 @@
 {% block content %}
 <div class="content_header">
     {% if user.img_profile %}
-        <img src="{% url 'user.img_profile' %}" alt="">
+        <img src="{{ user.img_profile.url }}" alt="">
     {% endif %}
     <p>아이디: {{ user.username }}</p>
     <p>닉네임: {{ user.nickname }}</p>
     <p>슬랙 계정: {{ user.slack }}</p>
     <p>휴대전화번호: {{ user.phone }}</p>
     <p></p>
+
+    <form action="{% url 'member:user_delete' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">DELETE ACCOUNT</button>
+    </form>
 </div>
 {% endblock %}
