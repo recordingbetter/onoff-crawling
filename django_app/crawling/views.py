@@ -68,8 +68,6 @@ def news_get_or_create(user, keyword):
 
 def news_list(request):
     datas = News.objects.all().filter(user_id=request.user.id)
-    for data in datas:
-        print(data)
     context = {
         'datas': datas,
         'search_form': SearchForm()

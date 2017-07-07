@@ -211,3 +211,4 @@ ENV/
 !.elasticbeanstalk/*.global.yml
 
 media/
+django/member/secret/
