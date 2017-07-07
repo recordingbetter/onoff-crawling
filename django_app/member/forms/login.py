@@ -8,15 +8,20 @@ class LoginForm(forms.Form):
         super().__init__(*args, **kwargs)
 
     username = forms.CharField(
+        label='',
         widget=forms.TextInput(
             attrs={
-                'placeholder': '사용자 아이디를 입력하세요',
+                'placeholder': 'Username',
+                'class': 'input-id',
             }
         )
     )
     password = forms.CharField(
+        label='',
         widget=forms.PasswordInput(
-            attrs={'placeholder': '비밀번호를 입력하세요',
+            attrs={
+            'placeholder': 'Password',
+            'class': 'input-password',
             }
         )
     )
