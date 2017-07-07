@@ -15,3 +15,6 @@ class News(models.Model):
     detail_link = models.CharField(max_length=200)
     img_news = models.ImageField(upload_to='news', blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-pk']

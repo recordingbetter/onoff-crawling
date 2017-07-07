@@ -1,6 +1,7 @@
 .container {
   width: 100%;
   height: auto;
+  background: #EAEAEA;
 
   .top-bar {
     width: 100%;
@@ -10,6 +11,7 @@
     background: #333333;
     color: #fff;
     text-align: right;
+    border-bottom: #7A7A7A solid 1px;
 
     ul {
       margin: 0;
@@ -58,6 +60,48 @@
     .search {
       input[type=text] {
         width: 350px;
+      }
+    }
+  }
+
+  .top-empty {
+    width: 100%;
+    height: 25px;
+    background: #EAEAEA;
+    float: left;
+  }
+
+  .content-container {
+    width: 100%;
+    height: auto;
+    background: pink;
+
+    .content {
+      width: 1100px;
+      margin: 0 auto;
+      height: auto;
+      float: center;
+      padding-left: 100px;
+
+      .events {
+        width: 250px;
+        height: 300px;
+        margin: 0 auto;
+        float: left;
+
+
+        .thumbnail {
+          padding-top: 10px;
+          
+          img {
+            width: 200px;
+            height: 250px;
+          }
+        }
+
+        .title {
+
+        }
       }
     }
   }

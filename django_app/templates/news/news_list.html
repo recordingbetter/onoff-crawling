@@ -1,10 +1,5 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-    {% for data in datas %}
-        <img src="{{ data.img_news }}" alt="">
-        <p>
-            <a href="{{ data.detail_link }}">{{ data.title }}</a>
-        </p>
-    {% endfor %}
+    {% include 'include/list_form.html' %}
 {% endblock %}

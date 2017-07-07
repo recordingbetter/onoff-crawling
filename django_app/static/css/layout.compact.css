@@ -1,6 +1,6 @@
-.container { width: 100%; height: auto; }
+.container { width: 100%; height: auto; background: #EAEAEA; }
 
-.container .top-bar { width: 100%; height: 30px; line-height: 30px; float: left; background: #333333; color: #fff; text-align: right; }
+.container .top-bar { width: 100%; height: 30px; line-height: 30px; float: left; background: #333333; color: #fff; text-align: right; border-bottom: #7A7A7A solid 1px; }
 
 .container .top-bar ul { margin: 0; padding: 0 30px; }
 
@@ -19,3 +19,15 @@
 .container .logoNsearch .logo a:hover { color: pink; }
 
 .container .logoNsearch .search input[type=text] { width: 350px; }
+
+.container .top-empty { width: 100%; height: 25px; background: #EAEAEA; float: left; }
+
+.container .content-container { width: 100%; height: auto; background: pink; }
+
+.container .content-container .content { width: 1100px; margin: 0 auto; height: auto; float: center; padding-left: 100px; }
+
+.container .content-container .content .events { width: 250px; height: 300px; margin: 0 auto; float: left; }
+
+.container .content-container .content .events .thumbnail { padding-top: 10px; }
+
+.container .content-container .content .events .thumbnail img { width: 200px; height: 250px; }

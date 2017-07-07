@@ -9,71 +9,67 @@ from django.shortcuts import render
 from .forms import SearchForm
 from .models import News
 
+import requests
+from bs4 import BeautifulSoup
 
-def selenium(keyword):
-    from selenium import webdriver
 
-    print(keyword)
-    ff_driver = webdriver.Firefox()
-    ff_driver.get("http://onoffmix.com/event?s=" + keyword)
+def crawling(keyword):
 
+    ### seleium ###
+    # from selenium import webdriver
+    # ff_driver = webdriver.Firefox()
+    # ff_driver.get("http://onoffmix.com/event?s=" + keyword)
     # ff_driver.find_element_by_class_name("soon").click()
+    # elements = ff_driver.find_elements_by_class_name("todayEvent")
 
-    elements = ff_driver.find_elements_by_class_name("todayEvent")
+    ### bs4 ###
+    r = requests.get("http://www.onoffmix.com/event?s=" + keyword, headers={
+         'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:10.0.2) Gecko/20100101 Firefox/10.0.2',
+    })
+    ### mac ###
+    # 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+
+    soup = BeautifulSoup(r.text, 'html.parser')
+    elements = soup.find_all('ul', class_='todayEvent')[:10]
 
     return elements
 
 
-def news_get_or_create(user, q):
-    new_datas = selenium(q)[:10]
+def slack_chat():
+    pass
 
-    for i in new_datas:
-        thumbnail = i.find_element_by_class_name("thumbnail").get_attribute('src')
-        title = i.find_element_by_class_name("eventLink").get_attribute('title')
-        detail_link = i.find_element_by_class_name("eventLink").get_attribute('href')
 
-        print(thumbnail, title, detail_link)
+def news_get_or_create(user, keyword):
+    ### selenium ###
+    # new_datas = selenium(keyword)[:10]
+    # for i in new_datas:
+    #     thumbnail = i.find_element_by_class_name("thumbnail").get_attribute('src')
+    #     title = i.find_element_by_class_name("eventLink").get_attribute('title')
+    #     detail_link = i.find_element_by_class_name("eventLink").get_attribute('href')
 
-<<<<<<< Updated upstream
-        news, news_create = News.objects.get_or_create(
-=======
-        alram, alram_value = News.objects.get_or_create(
->>>>>>> Stashed changes
+    ### bs4 ###
+    datas = crawling(keyword)
+    for data in datas:
+        thumbnail = data.img['src']
+        title = data.img['alt']
+        detail_link = data.a['href']
+
+        # print(thumbnail, "-", title, "-", detail_link)
+
+        News.objects.get_or_create(
             user=user,
             title=title,
             detail_link=detail_link,
-            # img_news=thumbnail,
+            img_news=thumbnail,
         )
 
-<<<<<<< Updated upstream
-        # 새로운레코드가 생겼으면
-        if news_create:
-            # 이미지 저장
-            # p = re.compile(r'.*\.([^?]+)')
-            # file_ext = re.search(p, thumbnail).group(1)
-            file_name = '{}.{}'.format(
-                    news.id,
-                    'jpg'
-                    )
-            temp_file = NamedTemporaryFile()
-            response = requests.get(thumbnail)
-            temp_file.write(response.content)
-            news.img_news.save(file_name, File(temp_file))
-
-            # slack, sms 보내기
-            pass
-=======
-        alram = q + "에 대한 정보가 업데이트됐습니다."
-        if alram_value == True:
-            slack_chat(alram)
-
->>>>>>> Stashed changes
+    # slack, sms 보내기
 
 
 def news_list(request):
-
-    datas = News.objects.filter(pk=request.user.id)
-
+    datas = News.objects.all().filter(user_id=request.user.id)
+    for data in datas:
+        print(data)
     context = {
         'datas': datas,
         'search_form': SearchForm()
@@ -81,41 +77,20 @@ def news_list(request):
     return render(request, 'news/news_list.html', context)
 
 
-def slack_chat(alram):
-    token = 'xoxb-209889657046-ktg9cEnF9LUDLobDpCg2yryM'
-
-    from slacker import Slacker
-    slack = Slacker(token)
-
-    slack.chat.post_message('#test', alram)
-
-
 def news_search(request):
-<<<<<<< Updated upstream
-    if request.method == "POST":
-=======
-    if request.method == 'POST':
->>>>>>> Stashed changes
-        form = SearchForm(data=request.POST)
-        if form.is_valid():
+    form = SearchForm(data=request.POST)
+    if form.is_valid():
 
-            q = form.cleaned_data['q_search']
+        q = form.cleaned_data['q_search']
 
+        if request.method == 'POST':
             news_get_or_create(request.user, q)
 
-            datas = News.objects.filter(title__contains=q)
-
-            context = {
-                'datas': datas,
-                'search_form': SearchForm(),
-            }
-            return render(request, 'news/news_search.html', context)
-<<<<<<< Updated upstream
-    else:
         datas = News.objects.filter(title__contains=q)
+        datas = News.objects.all().filter(user_id=request.user.id)
+
         context = {
             'datas': datas,
-            }
+            'search_form': SearchForm(),
+        }
         return render(request, 'news/news_search.html', context)
-=======
->>>>>>> Stashed changes
