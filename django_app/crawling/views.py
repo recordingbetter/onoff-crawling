@@ -86,7 +86,7 @@ def news_search(request):
         if request.method == 'POST':
             news_get_or_create(request.user, q)
 
-        datas = News.objects.all().filter(user_id=request.user.id)
+        datas = News.objects.all().filter(title__contains=q)
 
         context = {
             'datas': datas,
